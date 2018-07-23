@@ -1,11 +1,17 @@
 # Big-Mart-Sales
 EDA and plots
-# set workig directory
+## set workig directory
 setwd("C:\\Users\\Stella\\Desktop\\Data") 
 library(data.table) # used for reading and manipulation of data
 library(dplyr)      # used for data manipulation and joining
 library(ggplot2)    # used for ploting 
-# plot for Outlet_Establishment_Year
+## open requested files
+train = fread("Train_BigMart.csv") 
+test = fread("Test_BigMart.csv")
+submission = fread("SampleSubmission_BigMart.csv")
+test[,Item_Outlet_Sales := NA]
+combi = rbind(train, test)
+## plot for Outlet_Establishment_Year
 p7 = ggplot(combi %>% group_by(Outlet_Establishment_Year) %>% summarise(Count = n())) + 
   geom_bar(aes(factor(Outlet_Establishment_Year), Count), stat = "identity", fill = "coral1") +
   geom_label(aes(factor(Outlet_Establishment_Year), Count, label = Count), vjust = 0.5) +
